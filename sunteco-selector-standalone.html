@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunteco Solar System Selector - Find Your Perfect Power Solution</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #0066CC;
+            --solar-orange: #FF6600;
+            --energy-gold: #FFD700;
+            --eco-green: #009944;
+            --text-dark: #1a1a1a;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #fff8e1 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 102, 204, 0.15);
+            overflow: hidden;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #004d99 100%);
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: backgroundMove 20s linear infinite;
+        }
+
+        @keyframes backgroundMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(30px, 30px); }
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            color: white;
+            font-size: 2.2em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--solar-orange), var(--energy-gold));
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 20px var(--solar-orange);
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .question-section {
+            display: none;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .question-section.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-title {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .question-number {
+            background: linear-gradient(135deg, var(--solar-orange), var(--energy-gold));
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2em;
+            box-shadow: 0 4px 15px rgba(255, 102, 0, 0.3);
+        }
+
+        .question-description {
+            color: var(--text-light);
+            margin-bottom: 30px;
+            font-size: 1.05em;
+            line-height: 1.6;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .option-card {
+            background: var(--bg-light);
+            border: 3px solid transparent;
+            border-radius: 15px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 102, 204, 0.2);
+            border-color: var(--primary-blue);
+        }
+
+        .option-card.selected {
+            border-color: var(--solar-orange);
+            background: linear-gradient(135deg, rgba(255, 102, 0, 0.1), rgba(255, 215, 0, 0.1));
+            box-shadow: 0 8px 25px rgba(255, 102, 0, 0.25);
+        }
+
+        .option-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            background: var(--solar-orange);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .option-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .option-title {
+            font-weight: 600;
+            font-size: 1.2em;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .option-description {
+            color: var(--text-light);
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .appliance-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .appliance-item {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .appliance-item:hover {
+            border-color: var(--primary-blue);
+            transform: scale(1.05);
+        }
+
+        .appliance-item.selected {
+            border-color: var(--eco-green);
+            background: linear-gradient(135deg, rgba(0, 153, 68, 0.1), rgba(0, 204, 102, 0.1));
+        }
+
+        .appliance-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .appliance-name {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .appliance-power {
+            color: var(--text-light);
+            font-size: 0.8em;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .file-upload-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload-input {
+            position: absolute;
+            font-size: 100px;
+            opacity: 0;
+            right: 0;
+            top: 0;
+            cursor: pointer;
+        }
+
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            background: var(--bg-light);
+            border: 2px dashed #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-label:hover {
+            border-color: var(--primary-blue);
+            background: rgba(0, 102, 204, 0.05);
+        }
+
+        .file-preview {
+            margin-top: 15px;
+            padding: 10px;
+            background: var(--bg-light);
+            border-radius: 8px;
+            display: none;
+        }
+
+        .file-preview.active {
+            display: block;
+        }
+
+        .file-preview img {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            justify-content: space-between;
+        }
+
+        button {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-back {
+            background: #e0e0e0;
+            color: var(--text-dark);
+        }
+
+        .btn-back:hover {
+            background: #d0d0d0;
+            transform: translateX(-5px);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--solar-orange), var(--energy-gold));
+            color: white;
+            box-shadow: 0 5px 20px rgba(255, 102, 0, 0.3);
+            flex: 1;
+        }
+
+        .btn-next:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 102, 0, 0.4);
+        }
+
+        .btn-next:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, var(--eco-green), #00cc66);
+            color: white;
+            padding: 18px 45px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-top: 20px;
+            box-shadow: 0 5px 20px rgba(0, 153, 68, 0.3);
+        }
+
+        .btn-download:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 153, 68, 0.4);
+        }
+
+        .results-section {
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .summary-card {
+            background: var(--bg-light);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.05), rgba(255, 102, 0, 0.05));
+            border: 3px solid var(--primary-blue);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 25px;
+        }
+
+        .result-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--solar-orange), var(--energy-gold));
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .result-title {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .result-price {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--solar-orange);
+            margin-bottom: 20px;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .result-features {
+            margin: 25px 0;
+        }
+
+        .result-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+
+        .result-feature::before {
+            content: '✓';
+            background: var(--eco-green);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .contact-box {
+            background: #fff3e0;
+            border-left: 4px solid var(--solar-orange);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .alert-info {
+            background: #e3f2fd;
+            color: #1565c0;
+            border: 1px solid #90caf9;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .btn-back, .btn-download {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 1.6em;
+            }
+
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .appliance-list {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" style="stop-color:#FFD700"/>
+                            <stop offset="100%" style="stop-color:#FF6600"/>
+                        </radialGradient>
+                    </defs>
+                    <circle cx="50" cy="50" r="20" fill="url(#sunGrad)"/>
+                    <path d="M 50 10 L 53 25 L 47 25 Z" fill="white"/>
+                    <path d="M 75 25 L 65 35 L 60 28 Z" fill="white"/>
+                    <path d="M 90 50 L 75 53 L 75 47 Z" fill="white"/>
+                    <path d="M 75 75 L 60 72 L 65 65 Z" fill="white"/>
+                    <path d="M 50 90 L 47 75 L 53 75 Z" fill="white"/>
+                    <path d="M 25 75 L 40 72 L 35 65 Z" fill="white"/>
+                    <path d="M 10 50 L 25 47 L 25 53 Z" fill="white"/>
+                    <path d="M 25 25 L 35 35 L 40 28 Z" fill="white"/>
+                </svg>
+            </div>
+            <h1>Sunteco Solar System Selector</h1>
+            <p class="subtitle">Find Your Perfect Power Solution</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+
+        <div class="content">
+            <!-- Question 1: Budget -->
+            <div class="question-section active" id="question1">
+                <div class="question-title">
+                    <span class="question-number">1</span>
+                    <span>What's Your Budget Range?</span>
+                </div>
+                <p class="question-description">
+                    Let's start with your investment range. This helps us recommend systems that fit your financial plan.
+                </p>
+                
+                <div class="options-grid">
+                    <div class="option-card" onclick="selectBudget('entry', this)">
+                        <div class="option-icon">💰</div>
+                        <div class="option-title">Entry Level</div>
+                        <div class="option-description">₦150,000 - ₦600,000<br>Perfect for getting started</div>
+                    </div>
+                    <div class="option-card" onclick="selectBudget('mid', this)">
+                        <div class="option-icon">💵</div>
+                        <div class="option-title">Mid Range</div>
+                        <div class="option-description">₦600,000 - ₦2,000,000<br>Balanced power solution</div>
+                    </div>
+                    <div class="option-card" onclick="selectBudget('premium', this)">
+                        <div class="option-icon">💳</div>
+                        <div class="option-title">Premium</div>
+                        <div class="option-description">₦2,000,000 - ₦5,000,000<br>Comprehensive systems</div>
+                    </div>
+                    <div class="option-card" onclick="selectBudget('high-end', this)">
+                        <div class="option-icon">💎</div>
+                        <div class="option-title">High-End</div>
+                        <div class="option-description">₦5,000,000+<br>Commercial grade power</div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-next" id="nextBtn1" onclick="nextQuestion(1)" disabled>Next Step →</button>
+                </div>
+            </div>
+
+            <!-- Question 2: Select Appliances -->
+            <div class="question-section" id="question2">
+                <div class="question-title">
+                    <span class="question-number">2</span>
+                    <span>What Will You Power?</span>
+                </div>
+                <p class="question-description">
+                    Select all appliances and devices you want to run. Click as many as you need.
+                </p>
+                
+                <div class="appliance-list" id="applianceList"></div>
+
+                <div class="button-group">
+                    <button class="btn-back" onclick="previousQuestion(2)">← Back</button>
+                    <button class="btn-next" id="nextBtn2" onclick="validateAndNext(2)" disabled>Next Step →</button>
+                </div>
+            </div>
+
+            <!-- Question 3: Purpose & Customization -->
+            <div class="question-section" id="question3">
+                <div class="question-title">
+                    <span class="question-number">3</span>
+                    <span>What Do You Want to Power?</span>
+                </div>
+                <p class="question-description">
+                    Tell us more about your specific needs and any customization requirements.
+                </p>
+                
+                <div class="input-group">
+                    <label class="input-label">Primary Purpose *</label>
+                    <p style="color: var(--text-light); font-size: 0.9em; margin-bottom: 10px;">
+                        What will you primarily use this solar system for?
+                    </p>
+                    <div class="options-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                        <div class="option-card" onclick="selectPurpose('home', this)">
+                            <div class="option-icon">🏠</div>
+                            <div class="option-title">Home Use</div>
+                            <div class="option-description">Residential power backup</div>
+                        </div>
+                        <div class="option-card" onclick="selectPurpose('office', this)">
+                            <div class="option-icon">💼</div>
+                            <div class="option-title">Office/Business</div>
+                            <div class="option-description">Commercial workspace</div>
+                        </div>
+                        <div class="option-card" onclick="selectPurpose('shop', this)">
+                            <div class="option-icon">🏪</div>
+                            <div class="option-title">Shop/Store</div>
+                            <div class="option-description">Retail operations</div>
+                        </div>
+                        <div class="option-card" onclick="selectPurpose('outdoor', this)">
+                            <div class="option-icon">⛺</div>
+                            <div class="option-title">Outdoor/Events</div>
+                            <div class="option-description">Mobile or camping</div>
+                        </div>
+                        <div class="option-card" onclick="selectPurpose('backup', this)">
+                            <div class="option-icon">🔋</div>
+                            <div class="option-title">Emergency Backup</div>
+                            <div class="option-description">Power outage protection</div>
+                        </div>
+                        <div class="option-card" onclick="selectPurpose('off-grid', this)">
+                            <div class="option-icon">🌄</div>
+                            <div class="option-title">Off-Grid Living</div>
+                            <div class="option-description">Complete independence</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group" style="margin-top: 30px;">
+                    <label class="input-label">Specific Needs or Customization (Optional)</label>
+                    <p style="color: var(--text-light); font-size: 0.9em; margin-bottom: 10px;">
+                        Do you have any special requirements?
+                    </p>
+                    <textarea id="customizationNeeds" placeholder="Describe any specific requirements, customization needs, or questions you have..."></textarea>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-back" onclick="previousQuestion(3)">← Back</button>
+                    <button class="btn-next" id="nextBtn3" onclick="nextQuestion(3)" disabled>Next Step →</button>
+                </div>
+            </div>
+
+            <!-- Question 4: Contact Information -->
+            <div class="question-section" id="question4">
+                <div class="question-title">
+                    <span class="question-number">4</span>
+                    <span>Your Contact Information</span>
+                </div>
+                <p class="question-description">
+                    We need your details to prepare your personalized recommendation.
+                </p>
+                
+                <div class="input-group">
+                    <label class="input-label">Full Name *</label>
+                    <input type="text" id="userName" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Email Address *</label>
+                    <input type="email" id="userEmail" placeholder="your@email.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Phone Number *</label>
+                    <input type="text" id="userPhone" placeholder="080XXXXXXXX" required>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-back" onclick="previousQuestion(4)">← Back</button>
+                    <button class="btn-next" id="nextBtn4" onclick="nextQuestion(4)" disabled>Next Step →</button>
+                </div>
+            </div>
+
+            <!-- Question 5: Installation Address & Roof Photo -->
+            <div class="question-section" id="question5">
+                <div class="question-title">
+                    <span class="question-number">5</span>
+                    <span>Installation Details</span>
+                </div>
+                <p class="question-description">
+                    Tell us where you'll install the system and upload a photo of your roof.
+                </p>
+                
+                <div class="input-group">
+                    <label class="input-label">Installation Address *</label>
+                    <textarea id="installAddress" placeholder="Enter complete address including street, area, city, and state" required></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Roof Photo *</label>
+                    <p style="color: var(--text-light); font-size: 0.9em; margin-bottom: 10px;">
+                        Upload a clear photo of your roof where solar panels will be installed.
+                    </p>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="roofPhoto" class="file-upload-input" accept="image/*" onchange="handleFileSelect(event)" required>
+                        <label for="roofPhoto" class="file-upload-label">
+                            <span style="font-size: 2em;">📷</span>
+                            <span>Click to upload roof photo</span>
+                        </label>
+                    </div>
+                    <div class="file-preview" id="filePreview"></div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-back" onclick="previousQuestion(5)">← Back</button>
+                    <button class="btn-next" id="nextBtn5" onclick="generateResults()">Get My Recommendation 🎯</button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section" id="resultsSection">
+                <div class="question-title">
+                    <span class="question-number">✨</span>
+                    <span>Your Perfect Match!</span>
+                </div>
+                
+                <div class="alert alert-info">
+                    <strong>📧 How to Send This Quote:</strong><br>
+                    1. Click "Download Quote" button below to save this recommendation<br>
+                    2. Email it to: <strong>sunteco@gmail.com</strong><br>
+                    3. Or WhatsApp to: <strong>07034350618</strong><br>
+                    Our team will contact you within 24 hours!
+                </div>
+                
+                <div id="captureArea">
+                    <!-- User Summary -->
+                    <div class="summary-card">
+                        <h3 style="color: var(--primary-blue); margin-bottom: 15px;">Your Selection Summary</h3>
+                        <div id="userSummary"></div>
+                    </div>
+
+                    <!-- Recommended Product -->
+                    <div id="recommendedProduct"></div>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn-download" onclick="downloadQuote()">📥 Download Quote (PDF)</button>
+                    <p style="margin-top: 15px; color: var(--text-light);">
+                        Then send to <strong>sunteco@gmail.com</strong> or WhatsApp <strong>07034350618</strong>
+                    </p>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn-back" onclick="location.reload()">Start New Quote</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Product database
+        const products = [
+            { name: "Sunteco Series E-60 + RADIO", price: 174000, capacity: "60Wh", inverter: "DC", solarPanels: 1, features: ["Compact solar system", "Built-in radio", "LED lamps included", "2-year warranty"], appliances: ["lights", "phone", "radio"], minBudget: 150000, maxBudget: 250000 },
+            { name: "SUNTECO EB3A Portable Power Station", price: 448000, capacity: "268Wh", inverter: "600W", solarPanels: 1, features: ["600W AC output", "9 output ports", "24/7 UPS", "App control"], appliances: ["lights", "phone", "laptop", "tv", "fan", "blender"], minBudget: 400000, maxBudget: 550000 },
+            { name: "Sunteco Series P-350 Premium System", price: 595800, capacity: "350Wh", inverter: "DC", solarPanels: 1, features: ["DC fan included", "Radio included", "Multiple lamps", "2-year warranty"], appliances: ["lights", "phone", "radio", "fan", "tv"], minBudget: 550000, maxBudget: 700000 },
+            { name: "SUNTECO EB55 Portable Power Station", price: 929728, capacity: "537Wh", inverter: "700W", solarPanels: 1, features: ["700W pure sine wave", "11 outputs", "Fast dual charging"], appliances: ["lights", "phone", "laptop", "tv", "fan", "blender"], minBudget: 850000, maxBudget: 1000000 },
+            { name: "SUNTECO AC60 Waterproof Power Station", price: 846300, capacity: "403Wh", inverter: "600W", solarPanels: 1, features: ["IP65 waterproof", "6-year warranty", "Expandable", "Turbo charging"], appliances: ["lights", "phone", "laptop", "tv", "fan", "fridge"], minBudget: 800000, maxBudget: 950000 },
+            { name: "SUNTECO EB70 Portable Power Station", price: 972940, capacity: "716Wh", inverter: "1000W", solarPanels: 1, features: ["1000W output", "716Wh capacity", "Wireless charging"], appliances: ["lights", "phone", "laptop", "tv", "fan", "blender", "fridge"], minBudget: 900000, maxBudget: 1100000 },
+            { name: "Sunteco Vital 1.5kVA System", price: 1194000, capacity: "1280Wh", inverter: "1.5kVA", solarPanels: 2, features: ["360Wp solar panels", "Professional installation", "2-year warranty"], appliances: ["lights", "phone", "laptop", "tv", "fan", "blender", "fridge", "washing-machine"], minBudget: 1000000, maxBudget: 1400000 },
+            { name: "Sunteco RSW 1.5b Complete System", price: 1620000, capacity: "2.4kWh", inverter: "1.5kVA", solarPanels: 2, features: ["540Wp solar", "2.4kWh battery", "Professional installation"], appliances: ["lights", "phone", "laptop", "tv", "fan", "blender", "fridge", "washing-machine"], minBudget: 1500000, maxBudget: 1800000 },
+            { name: "SUNTECO EB150 Power Station", price: 2581469, capacity: "1500Wh", inverter: "1000W", solarPanels: 2, features: ["1500Wh capacity", "500W solar input", "Professional grade"], appliances: ["lights", "phone", "laptop", "tv", "fan", "blender", "fridge"], minBudget: 2400000, maxBudget: 2800000 },
+            { name: "Sunteco RSW 2L Professional System", price: 2220000, capacity: "3.84kWh", inverter: "2kVA", solarPanels: 3, features: ["1770Wp Jinko panels", "3.84kWh battery", "Professional installation"], appliances: ["lights", "phone", "laptop", "tv", "fan", "blender", "fridge", "washing-machine", "home-theater"], minBudget: 2000000, maxBudget: 2500000 },
+            { name: "SUNTECO EB240 Power Station", price: 2880648, capacity: "2400Wh", inverter: "1000W", solarPanels: 2, features: ["2400Wh mega capacity", "Extended off-grid use"], appliances: ["lights", "phone", "laptop", "tv", "fan", "blender", "fridge"], minBudget: 2700000, maxBudget: 3100000 },
+            { name: "SUNTECO AC200MAX Power Station", price: 2921760, capacity: "2048Wh", inverter: "2200W", solarPanels: 3, features: ["2200W output", "Expandable", "900W solar input", "App control"], appliances: ["lights", "phone", "laptop", "tv", "fan", "blender", "fridge", "ac"], minBudget: 2800000, maxBudget: 3200000 },
+            { name: "Sunteco RSW 2 Complete System", price: 2700000, capacity: "4.8kWh", inverter: "2kVA", solarPanels: 3, features: ["1350Wp panels", "4.8kWh battery", "Professional installation"], appliances: ["lights", "phone", "laptop", "tv", "fan", "blender", "fridge", "washing-machine"], minBudget: 2500000, maxBudget: 3000000 },
+            { name: "Sunteco RSW 2.5kVA System", price: 2820000, capacity: "4.8kWh", inverter: "2.5kVA", solarPanels: 3, features: ["2.5kVA inverter", "Extended capacity", "Professional installation"], appliances: ["lights", "phone", "laptop", "tv", "fan", "blender", "freezer", "washing-machine"], minBudget: 2700000, maxBudget: 3100000 },
+            { name: "Sunteco RSW 2A Advanced System", price: 2940000, capacity: "2.4kWh", inverter: "2kVA", solarPanels: 3, features: ["High-power appliances", "Can run pressing iron", "Professional installation"], appliances: ["lights", "phone", "laptop", "tv", "fan", "blender", "freezer", "washing-machine", "iron", "microwave"], minBudget: 2800000, maxBudget: 3200000 },
+            { name: "Sunteco RSW 3.5kVA System", price: 2880000, capacity: "2.4kWh", inverter: "3.5kVA", solarPanels: 3, features: ["3.5kVA inverter", "1425Wp solar", "Professional installation"], appliances: ["lights", "phone", "laptop", "tv", "fan", "blender", "fridge", "washing-machine", "ac"], minBudget: 2700000, maxBudget: 3200000 },
+            { name: "SUNTECO AC300 + B230 System", price: 3319880, capacity: "3072Wh", inverter: "3000W", solarPanels: 3, features: ["3000W output", "24/7 UPS", "Expandable", "App control"], appliances: ["lights", "phone", "laptop", "tv", "fan", "blender", "fridge", "freezer", "ac"], minBudget: 3100000, maxBudget: 3600000 },
+            { name: "Sunteco RSW 3.5L A System", price: 3720000, capacity: "5kWh", inverter: "3.5kVA", solarPanels: 6, features: ["3540Wp Jinko panels", "5kWh battery", "AC compatible"], appliances: ["lights", "phone", "laptop", "tv", "fan", "blender", "freezer", "washing-machine", "iron", "microwave", "ac", "pump"], minBudget: 3500000, maxBudget: 4000000 },
+            { name: "SUNTECO AC500 + B300S Premium System", price: 3784760, capacity: "3072Wh", inverter: "5000W", solarPanels: 4, features: ["5000W power", "4-year warranty", "App control"], appliances: ["lights", "phone", "laptop", "tv", "fan", "blender", "fridge", "freezer", "ac", "pump"], minBudget: 3600000, maxBudget: 4100000 },
+            { name: "Sunteco RSW 3.5B Premium System", price: 4050000, capacity: "9.6kWh", inverter: "3.5kVA", solarPanels: 4, features: ["9.6kWh battery", "1800Wp solar", "Extended runtime"], appliances: ["lights", "phone", "laptop", "tv", "fan", "blender", "freezer", "washing-machine", "iron", "microwave", "pump"], minBudget: 3900000, maxBudget: 4300000 },
+            { name: "Sunteco RSW 5.5L B System", price: 4740000, capacity: "5kWh", inverter: "5.5kVA", solarPanels: 6, features: ["5.5kVA power", "Premium Jinko panels", "AC compatible"], appliances: ["lights", "phone", "laptop", "tv", "fan", "blender", "freezer", "washing-machine", "iron", "microwave", "ac", "pump"], minBudget: 4500000, maxBudget: 5100000 }
+        ];
+
+        const appliances = {
+            "lights": { name: "LED Lights", icon: "💡", power: 50 },
+            "phone": { name: "Phone Charging", icon: "📱", power: 20 },
+            "laptop": { name: "Laptop", icon: "💻", power: 65 },
+            "tv": { name: "Television", icon: "📺", power: 100 },
+            "fan": { name: "Fan", icon: "🌀", power: 75 },
+            "radio": { name: "Radio", icon: "📻", power: 10 },
+            "blender": { name: "Blender", icon: "🥤", power: 300 },
+            "fridge": { name: "Refrigerator", icon: "🧊", power: 200 },
+            "freezer": { name: "Freezer", icon: "❄️", power: 300 },
+            "washing-machine": { name: "Washing Machine", icon: "🧺", power: 500 },
+            "iron": { name: "Pressing Iron", icon: "🔥", power: 1000 },
+            "microwave": { name: "Microwave", icon: "📻", power: 1000 },
+            "ac": { name: "Air Conditioner", icon: "❄️", power: 1500 },
+            "pump": { name: "Water Pump", icon: "💧", power: 750 },
+            "home-theater": { name: "Home Theater", icon: "🔊", power: 200 }
+        };
+
+        let quizData = {
+            budget: null,
+            selectedAppliances: [],
+            purpose: null,
+            customizationNeeds: "",
+            userName: "",
+            userEmail: "",
+            userPhone: "",
+            installAddress: "",
+            roofPhotoData: null,
+            roofPhotoName: ""
+        };
+
+        let currentQuestion = 1;
+
+        // Initialize
+        function initAppliances() {
+            const applianceList = document.getElementById('applianceList');
+            applianceList.innerHTML = Object.keys(appliances).map(key => {
+                const app = appliances[key];
+                return `
+                    <div class="appliance-item" onclick="toggleAppliance('${key}', this)">
+                        <div class="appliance-icon">${app.icon}</div>
+                        <div class="appliance-name">${app.name}</div>
+                        <div class="appliance-power">${app.power}W</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function selectBudget(value, element) {
+            document.querySelectorAll('#question1 .option-card').forEach(card => card.classList.remove('selected'));
+            element.classList.add('selected');
+            quizData.budget = value;
+            document.getElementById('nextBtn1').disabled = false;
+        }
+
+        function toggleAppliance(value, element) {
+            element.classList.toggle('selected');
+            const index = quizData.selectedAppliances.indexOf(value);
+            if (index > -1) {
+                quizData.selectedAppliances.splice(index, 1);
+            } else {
+                quizData.selectedAppliances.push(value);
+            }
+            document.getElementById('nextBtn2').disabled = quizData.selectedAppliances.length === 0;
+        }
+
+        function validateAndNext(questionNum) {
+            const hasTv = quizData.selectedAppliances.includes('tv');
+            const hasBlender = quizData.selectedAppliances.includes('blender');
+            
+            if (hasTv && hasBlender) {
+                const recommendedProducts = products.filter(p => p.solarPanels >= 3);
+                if (recommendedProducts.length === 0) {
+                    alert('Based on your selection (TV + Blender), we recommend systems with 3 or more solar panels. Please contact us directly at 07034350618');
+                    return;
+                }
+            }
+            
+            nextQuestion(questionNum);
+        }
+
+        function selectPurpose(value, element) {
+            document.querySelectorAll('#question3 .option-card').forEach(card => card.classList.remove('selected'));
+            element.classList.add('selected');
+            quizData.purpose = value;
+            document.getElementById('nextBtn3').disabled = false;
+        }
+
+        document.getElementById('userName')?.addEventListener('input', validateQuestion4);
+        document.getElementById('userEmail')?.addEventListener('input', validateQuestion4);
+        document.getElementById('userPhone')?.addEventListener('input', validateQuestion4);
+
+        function validateQuestion4() {
+            const name = document.getElementById('userName').value.trim();
+            const email = document.getElementById('userEmail').value.trim();
+            const phone = document.getElementById('userPhone').value.trim();
+            
+            const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            const phoneValid = phone.length >= 10;
+            
+            document.getElementById('nextBtn4').disabled = !(name && emailValid && phoneValid);
+        }
+
+        document.getElementById('installAddress')?.addEventListener('input', validateQuestion5);
+
+        function validateQuestion5() {
+            const address = document.getElementById('installAddress').value.trim();
+            const hasPhoto = quizData.roofPhotoData !== null;
+            
+            document.getElementById('nextBtn5').disabled = !(address && hasPhoto);
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    quizData.roofPhotoData = e.target.result;
+                    quizData.roofPhotoName = file.name;
+                    
+                    const preview = document.getElementById('filePreview');
+                    preview.innerHTML = `
+                        <div style="display: flex; align-items: center; gap: 10px; color: var(--eco-green);">
+                            <span style="font-size: 1.5em;">✓</span>
+                            <div>
+                                <div style="font-weight: 600;">${file.name}</div>
+                                <div style="font-size: 0.9em; color: var(--text-light);">${(file.size / 1024 / 1024).toFixed(2)} MB</div>
+                            </div>
+                        </div>
+                        <img src="${e.target.result}" alt="Roof photo" />
+                    `;
+                    preview.classList.add('active');
+                    validateQuestion5();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function nextQuestion(current) {
+            if (current === 3) {
+                quizData.customizationNeeds = document.getElementById('customizationNeeds').value.trim();
+            } else if (current === 4) {
+                quizData.userName = document.getElementById('userName').value.trim();
+                quizData.userEmail = document.getElementById('userEmail').value.trim();
+                quizData.userPhone = document.getElementById('userPhone').value.trim();
+            }
+            
+            document.getElementById(`question${current}`).classList.remove('active');
+            currentQuestion = current + 1;
+            document.getElementById(`question${currentQuestion}`).classList.add('active');
+            updateProgress();
+        }
+
+        function previousQuestion(current) {
+            document.getElementById(`question${current}`).classList.remove('active');
+            currentQuestion = current - 1;
+            document.getElementById(`question${currentQuestion}`).classList.add('active');
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progress = (currentQuestion / 5) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function calculateRecommendation() {
+            let totalPower = 0;
+            quizData.selectedAppliances.forEach(appKey => {
+                totalPower += appliances[appKey].power;
+            });
+            
+            const budgetRanges = {
+                'entry': [150000, 600000],
+                'mid': [600000, 2000000],
+                'premium': [2000000, 5000000],
+                'high-end': [5000000, 50000000]
+            };
+            const [minBudget, maxBudget] = budgetRanges[quizData.budget];
+            
+            const hasTv = quizData.selectedAppliances.includes('tv');
+            const hasBlender = quizData.selectedAppliances.includes('blender');
+            const needsMultiplePanels = hasTv && hasBlender;
+            
+            let suitableProducts = products.filter(product => {
+                if (product.price < minBudget || product.price > maxBudget) return false;
+                if (needsMultiplePanels && product.solarPanels < 3) return false;
+                
+                const hasAllAppliances = quizData.selectedAppliances.every(app => 
+                    product.appliances.includes(app)
+                );
+                return hasAllAppliances;
+            });
+            
+            suitableProducts.sort((a, b) => {
+                const aScore = Math.abs(a.price - (minBudget + maxBudget) / 2) / ((minBudget + maxBudget) / 2);
+                const bScore = Math.abs(b.price - (minBudget + maxBudget) / 2) / ((minBudget + maxBudget) / 2);
+                return aScore - bScore;
+            });
+            
+            return {
+                product: suitableProducts[0] || null,
+                totalPower: totalPower,
+                needsMultiplePanels: needsMultiplePanels
+            };
+        }
+
+        function generateResults() {
+            quizData.installAddress = document.getElementById('installAddress').value.trim();
+            
+            const recommendation = calculateRecommendation();
+            displayResults(recommendation);
+        }
+
+        function displayResults(recommendation) {
+            document.querySelectorAll('.question-section').forEach(section => section.classList.remove('active'));
+            document.getElementById('resultsSection').classList.add('active');
+            updateProgress();
+            document.getElementById('progressBar').style.width = '100%';
+            
+            const applianceNames = quizData.selectedAppliances.map(key => appliances[key].name).join(', ');
+            const purposeLabels = {
+                'home': 'Home Use',
+                'office': 'Office/Business',
+                'shop': 'Shop/Store',
+                'outdoor': 'Outdoor/Events',
+                'backup': 'Emergency Backup',
+                'off-grid': 'Off-Grid Living'
+            };
+            
+            document.getElementById('userSummary').innerHTML = `
+                <p style="margin-bottom: 10px;"><strong>Name:</strong> ${quizData.userName}</p>
+                <p style="margin-bottom: 10px;"><strong>Email:</strong> ${quizData.userEmail}</p>
+                <p style="margin-bottom: 10px;"><strong>Phone:</strong> ${quizData.userPhone}</p>
+                <p style="margin-bottom: 10px;"><strong>Budget Range:</strong> ${quizData.budget.charAt(0).toUpperCase() + quizData.budget.slice(1)}</p>
+                <p style="margin-bottom: 10px;"><strong>Selected Appliances:</strong> ${applianceNames}</p>
+                <p style="margin-bottom: 10px;"><strong>Primary Purpose:</strong> ${purposeLabels[quizData.purpose]}</p>
+                ${quizData.customizationNeeds ? `<p style="margin-bottom: 10px;"><strong>Special Requirements:</strong> ${quizData.customizationNeeds}</p>` : ''}
+                <p style="margin-bottom: 10px;"><strong>Total Power Required:</strong> ${recommendation.totalPower}W</p>
+                <p style="margin-bottom: 10px;"><strong>Installation Address:</strong> ${quizData.installAddress}</p>
+                ${recommendation.needsMultiplePanels ? '<p style="color: var(--solar-orange); font-weight: 600;">⚠️ Requires system with 3+ solar panels (TV + Blender selected)</p>' : ''}
+            `;
+            
+            if (!recommendation.product) {
+                document.getElementById('recommendedProduct').innerHTML = `
+                    <div class="result-card">
+                        <div class="result-title">Custom Solution Required</div>
+                        <p>Based on your specific requirements, we recommend a custom consultation.</p>
+                        <div class="contact-box">
+                            <p style="font-weight: 600; margin-bottom: 10px;">📞 Ready to Order?</p>
+                            <p style="font-size: 1.2em; color: var(--solar-orange); font-weight: 700;">Call: 07034350618</p>
+                            <p style="margin-top: 10px;">📧 Email: sunteco@gmail.com</p>
+                            <p style="margin-top: 10px;">💬 WhatsApp: 07034350618</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            const product = recommendation.product;
+            document.getElementById('recommendedProduct').innerHTML = `
+                <div class="result-card">
+                    <span class="result-badge">RECOMMENDED FOR YOU</span>
+                    <div class="result-title">${product.name}</div>
+                    <div class="result-price">₦${product.price.toLocaleString()}</div>
+                    <div class="result-features">
+                        ${product.features.map(f => `<div class="result-feature">${f}</div>`).join('')}
+                        <div class="result-feature">Capacity: ${product.capacity}</div>
+                        <div class="result-feature">Inverter: ${product.inverter}</div>
+                        <div class="result-feature">Solar Panels: ${product.solarPanels}</div>
+                    </div>
+                    <div class="contact-box">
+                        <p style="font-weight: 600; margin-bottom: 10px;">📞 Ready to Order?</p>
+                        <p style="font-size: 1.2em; color: var(--solar-orange); font-weight: 700;">Call: 07034350618</p>
+                        <p style="margin-top: 10px;">📧 Email: sunteco@gmail.com</p>
+                        <p style="margin-top: 10px;">💬 WhatsApp: 07034350618</p>
+                        <p style="margin-top: 15px; color: var(--text-light); font-size: 0.9em;">Our team is ready to assist you with installation and answer any questions!</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function downloadQuote() {
+            window.print();
+        }
+
+        initAppliances();
+        updateProgress();
+    </script>
+</body>
+</html>
